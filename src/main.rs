@@ -1,29 +1,55 @@
+use clap::Parser;
 use rustyline::DefaultEditor;
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::read_to_string};
+
+const VERSION: &str = "0.2.0";
+
+#[derive(Parser, Debug)]
+#[command(
+    name = "Pravda",
+    version = VERSION,
+    author = "梶塚太智 <kajizukataichi@outlook.jp>",
+    about = "A functional programming language that best of both worlds between Haskell and Lisp",
+    after_help = "For more information, visit https://pravda-lang.github.io/",
+)]
+struct Cli {
+    /// Run the script file
+    #[arg(index = 1)]
+    file: Option<String>,
+}
 
 fn main() {
     println!("Stack++");
+    let cli = Cli::parse();
     let mut rl = DefaultEditor::new().unwrap();
     let mut stackpp = Core {
         stack: vec![],
         memory: HashMap::new(),
     };
 
-    loop {
-        let mut code = String::new();
-        loop {
-            let enter = rl.readline("> ").unwrap();
-            code += &format!("{enter}\n");
-            if enter.is_empty() {
-                break;
-            }
+    if let Some(path) = cli.file {
+        if let Ok(code) = read_to_string(path) {
+            stackpp.eval(Core::parse(code));
+        } else {
+            eprintln!("Error! it fault to open the file");
         }
+    } else {
+        loop {
+            let mut code = String::new();
+            loop {
+                let enter = rl.readline("> ").unwrap();
+                code += &format!("{enter}\n");
+                if enter.is_empty() {
+                    break;
+                }
+            }
 
-        let program = Core::parse(code.to_string());
-        stackpp.eval(program.clone());
+            let program = Core::parse(code.to_string());
+            stackpp.eval(program.clone());
 
-        println!("AST  : {program:?}");
-        println!("Stack: {stackpp:?}");
+            println!("AST  : {program:?}");
+            println!("Stack: {stackpp:?}");
+        }
     }
 }
 
