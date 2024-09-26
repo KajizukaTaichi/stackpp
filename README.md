@@ -1,2 +1,2 @@
 # Stack++
-A improved Stack based programming language
+A improved Stack machine programming language 
