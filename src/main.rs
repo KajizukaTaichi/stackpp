@@ -119,6 +119,7 @@ enum Instruction {
     Until,
     Let,
     Swap,
+    Copy,
     Pop,
 }
 
@@ -223,6 +224,7 @@ impl Core {
                     "until" => result.push(Type::Instruction(Instruction::Until)),
                     "let" => result.push(Type::Instruction(Instruction::Let)),
                     "swap" => result.push(Type::Instruction(Instruction::Swap)),
+                    "copy" => result.push(Type::Instruction(Instruction::Copy)),
                     "pop" => result.push(Type::Instruction(Instruction::Pop)),
                     _ => {}
                 }
@@ -342,6 +344,11 @@ impl Core {
                         let b = self.pop();
                         let a = self.pop();
                         self.stack.push(b);
+                        self.stack.push(a);
+                    }
+                    Instruction::Copy => {
+                        let a = self.pop();
+                        self.stack.push(a.clone());
                         self.stack.push(a);
                     }
                     Instruction::Pop => {
