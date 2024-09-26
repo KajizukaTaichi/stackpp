@@ -208,38 +208,38 @@ impl Core {
             match order {
                 Type::Instruction(instruction) => match instruction {
                     Instruction::Add => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Number(a + b))
                     }
                     Instruction::Sub => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Number(a - b))
                     }
                     Instruction::Mul => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Number(a * b))
                     }
                     Instruction::Div => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Number(a / b))
                     }
                     Instruction::Mod => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Number(a % b))
                     }
                     Instruction::Pow => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Number(a.powf(b)))
                     }
                     Instruction::Concat => {
-                        let a = self.pop().get_string();
                         let b = self.pop().get_string();
+                        let a = self.pop().get_string();
                         self.stack.push(Type::String(a + &b));
                     }
                     Instruction::Print => {
@@ -250,18 +250,18 @@ impl Core {
                         DefaultEditor::new().unwrap().readline("").unwrap(),
                     )),
                     Instruction::Equal => {
-                        let a = self.pop().get_string();
                         let b = self.pop().get_string();
+                        let a = self.pop().get_string();
                         self.stack.push(Type::Bool(a == b));
                     }
                     Instruction::LessThan => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Bool(a < b))
                     }
                     Instruction::GreaterThan => {
-                        let a = self.pop().get_number();
                         let b = self.pop().get_number();
+                        let a = self.pop().get_number();
                         self.stack.push(Type::Bool(a > b))
                     }
                     Instruction::Eval => {
