@@ -118,6 +118,7 @@ enum Instruction {
     While,
     Until,
     Let,
+    Pop,
 }
 
 #[derive(Clone, Debug)]
@@ -220,6 +221,7 @@ impl Core {
                     "while" => result.push(Type::Instruction(Instruction::While)),
                     "until" => result.push(Type::Instruction(Instruction::Until)),
                     "let" => result.push(Type::Instruction(Instruction::Let)),
+                    "pop" => result.push(Type::Instruction(Instruction::Pop)),
                     _ => {}
                 }
             }
@@ -333,6 +335,9 @@ impl Core {
                         let name = self.pop().get_string();
                         let value = self.pop();
                         self.memory.insert(name, value);
+                    }
+                    Instruction::Pop => {
+                        self.stack.pop();
                     }
                 },
                 Type::Variable(name) => {
