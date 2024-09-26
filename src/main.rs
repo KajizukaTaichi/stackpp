@@ -19,7 +19,6 @@ struct Cli {
 }
 
 fn main() {
-    println!("Stack++");
     let cli = Cli::parse();
     let mut rl = DefaultEditor::new().unwrap();
     let mut stackpp = Core {
@@ -34,6 +33,7 @@ fn main() {
             eprintln!("Error! it fault to open the file");
         }
     } else {
+        println!("Stack++");
         loop {
             let mut code = String::new();
             loop {
