@@ -6,11 +6,10 @@ const VERSION: &str = "0.2.0";
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "Pravda",
+    name = "Stack++",
     version = VERSION,
     author = "梶塚太智 <kajizukataichi@outlook.jp>",
-    about = "A functional programming language that best of both worlds between Haskell and Lisp",
-    after_help = "For more information, visit https://pravda-lang.github.io/",
+    about = "A improved Stack machine programming language",
 )]
 struct Cli {
     /// Run the script file
