@@ -44,10 +44,9 @@ fn main() {
             }
 
             let program = Core::parse(code.to_string());
-            stackpp.eval(program.clone());
-
-            println!("AST  : {program:?}");
-            println!("Stack: {stackpp:?}");
+            println!("AST    : {program:?}");
+            stackpp.eval(program);
+            println!("Result : {stackpp:?}");
         }
     }
 }
