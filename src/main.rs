@@ -121,6 +121,10 @@ enum Instruction {
     Swap,
     Copy,
     Pop,
+    Insert,
+    Change,
+    Delete,
+    Append,
 }
 
 #[derive(Clone, Debug)]
@@ -226,6 +230,10 @@ impl Core {
                     "swap" => result.push(Type::Instruction(Instruction::Swap)),
                     "copy" => result.push(Type::Instruction(Instruction::Copy)),
                     "pop" => result.push(Type::Instruction(Instruction::Pop)),
+                    "insert" => result.push(Type::Instruction(Instruction::Insert)),
+                    "change" => result.push(Type::Instruction(Instruction::Change)),
+                    "delete" => result.push(Type::Instruction(Instruction::Delete)),
+                    "append" => result.push(Type::Instruction(Instruction::Append)),
                     _ => {}
                 }
             }
@@ -353,6 +361,32 @@ impl Core {
                     }
                     Instruction::Pop => {
                         self.stack.pop();
+                    }
+                    Instruction::Insert => {
+                        let new = self.pop();
+                        let index = self.pop().get_number() as usize;
+                        let mut block = self.pop().get_block();
+                        block.insert(index, new);
+                        self.stack.push(Type::Block(block));
+                    }
+                    Instruction::Change => {
+                        let new = self.pop();
+                        let index = self.pop().get_number() as usize;
+                        let mut block = self.pop().get_block();
+                        block[index] = new;
+                        self.stack.push(Type::Block(block));
+                    }
+                    Instruction::Delete => {
+                        let index = self.pop().get_number() as usize;
+                        let mut block = self.pop().get_block();
+                        block.remove(index);
+                        self.stack.push(Type::Block(block));
+                    }
+                    Instruction::Append => {
+                        let new = self.pop();
+                        let mut block = self.pop().get_block();
+                        block.push(new);
+                        self.stack.push(Type::Block(block));
                     }
                 },
                 Type::Variable(name) => {
