@@ -1,0 +1,18 @@
+0 "i" let
+{$i 100 less-than} {
+    $i 1 add "i" let
+    $i 15 mod 0 equal {
+        "FizzBuzz" print
+    } {
+        $i 3 mod 0 equal {
+            "Fizz" print
+        } {
+            $i 5 mod 0 equal {
+                "Buzz" print
+            } {
+                $i print
+            } if-else
+        } if-else
+    } if-else
+    $new-line print
+} while
