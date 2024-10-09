@@ -1,6 +1,6 @@
 use clap::Parser;
 use rustyline::DefaultEditor;
-use std::{collections::HashMap, fs::read_to_string};
+use std::{collections::HashMap, fs::read_to_string, process::exit};
 
 const VERSION: &str = "0.2.0";
 
@@ -36,7 +36,7 @@ fn main() {
         loop {
             let mut code = String::new();
             loop {
-                let enter = rl.readline("> ").unwrap();
+                let enter = rl.readline("> ").unwrap_or_default();
                 code += &format!("{enter}\n");
                 if enter.is_empty() {
                     break;
@@ -74,6 +74,7 @@ impl Type {
         match self {
             Type::String(s) | Type::Variable(s) => s.to_owned(),
             Type::Number(n) => n.to_string(),
+            Type::Error(e) => format!("{e:?}").to_lowercase(),
             _ => String::new(),
         }
     }
@@ -125,6 +126,7 @@ enum Instruction {
     Change,
     Delete,
     Append,
+    Exit,
 }
 
 #[derive(Clone, Debug)]
@@ -234,6 +236,7 @@ impl Core {
                     "change" => result.push(Type::Instruction(Instruction::Change)),
                     "delete" => result.push(Type::Instruction(Instruction::Delete)),
                     "append" => result.push(Type::Instruction(Instruction::Append)),
+                    "exit" => result.push(Type::Instruction(Instruction::Exit)),
                     _ => {}
                 }
             }
@@ -388,6 +391,7 @@ impl Core {
                         block.push(new);
                         self.stack.push(Type::Block(block));
                     }
+                    Instruction::Exit => exit(0),
                 },
                 Type::Variable(name) => {
                     if let Some(value) = self.memory.get(&name) {
