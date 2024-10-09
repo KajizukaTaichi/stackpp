@@ -22,7 +22,11 @@ fn main() {
     let mut rl = DefaultEditor::new().unwrap();
     let mut stackpp = Core {
         stack: vec![],
-        memory: HashMap::new(),
+        memory: HashMap::from([
+            ("new-line".to_string(), Type::String("\n".to_string())),
+            ("double-quote".to_string(), Type::String("\"".to_string())),
+            ("tab".to_string(), Type::String("\t".to_string())),
+        ]),
     };
 
     if let Some(path) = cli.file {
