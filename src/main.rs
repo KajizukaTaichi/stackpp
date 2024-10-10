@@ -178,7 +178,7 @@ impl Core {
                             current_token.push(c);
                         }
                     }
-                    ' ' | '\n' | '\t' | '\r' | '　' => {
+                    ' ' | '　' | '\n' | '\t' | '\r' => {
                         if in_parentheses != 0 || in_quote {
                             current_token.push(c);
                         } else if !current_token.is_empty() {
